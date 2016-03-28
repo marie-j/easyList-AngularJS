@@ -1,0 +1,26 @@
+<header>
+  <span>Ma Liste </span>
+  <span><a href="#/recipe">Recettes</a></span>
+</header>
+
+<button type="button" ng-click="deleteList()">Effacer ma liste</button>
+
+<div class="addToList">
+  <form id="add-form">
+    <input type="text" placeholder="Recette" id="title" ng-model="title">
+    <input type="number" placeholder="Nombre de personnes" ng-model="number"></br>
+    <input type="text" placeholder="Article" ng-model="article">
+    <button type="button" ng-click="addToList(title,number,article)" class="icon-plus"></button>
+  </form>
+</div>
+
+<span>Ma liste de course</span>
+
+<div class="list">
+  <div class="element"  ng-repeat="e in list track by $index">
+    <label>{{e.name}}</label>
+    <label>{{e.quantity}}</label></br>
+    <button type="button" ng-click="checkElement()" class="icon-checkmark2"></button>
+    <button type="button" ng-click="deleteElement()" class="icon-cancel-circle"></button>
+  </div>
+</div>
