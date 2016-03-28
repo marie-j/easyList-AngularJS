@@ -21,7 +21,7 @@ myApp.config(['$routeProvider',
       })
 
       .otherwise({
-	      redirectTo: '/home/world !'
+	      redirectTo: '/list'
       });
   }
 ]);
