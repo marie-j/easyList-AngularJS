@@ -65,6 +65,13 @@ myApp.controller('listCtrl', ['$scope', '$routeParams', function($scope, $routeP
 myApp.controller('recipeCtrl', ['$scope', '$routeParams', function($scope, $routeParams){
 		$scope.forms = [];
 		$scope.recipe = recipe.all();
+		$scope.showAll= true;
+		$scope.searched = [];
+		$scope.showIngredients = [];
+		$scope.editR = [];
+		$scope.editI = [];
+		$scope.add = [];
+		$scope.addI = [];
 
 		$scope.addIngredient = function() {
 			var f = {
@@ -114,5 +121,79 @@ myApp.controller('recipeCtrl', ['$scope', '$routeParams', function($scope, $rout
 			}
 		}
 
+		$scope.lookFor = function(search) {
+			if (!$scope.showAll){
+				$scope.searched = [];
+			}
+			var r = $scope.recipe;
+			for (var i = 0 ; i < r.length ; i ++) {
+				if (r[i].title.substring(0,search.length) == search) {
+					$scope.searched.push(r[i]);
+				}
+			}
+			$scope.search = undefined;
+			$scope.showAll = false;
+		}
+
+		$scope.goBack = function() {
+			$scope.showAll = true;
+		}
+
+		$scope.showRecipe = function(index) {
+			$scope.showIngredients[index] = true;
+			$scope.editR[index] = false;
+		}
+
+		$scope.hide = function(index) {
+			$scope.showIngredients[index] = false;
+			$scope.editR[index] = false;
+			$scope.add = [];
+			$scope.addI[index] =false;
+		}
+
+		$scope.editRecipe = function(index) {
+			$scope.showIngredients[index] = false;
+			$scope.editR[index] = true;
+		}
+
+		$scope.deleteRecipe = function(index) {
+			$scope.recipe.splice(index,1);
+			recipe.replaceAll($scope.recipe);
+		}
+
+		$scope.editIngredient = function(index) {
+			$scope.editI[index] = true;
+		}
+
+		$scope.deleteIngredient = function(indice,index) {
+			$scope.recipe[indice].ingredients.splice(index,1);
+			recipe.replaceAll($scope.recipe);
+		}
+
+		$scope.validate = function(index) {
+			recipe.replaceAll($scope.recipe);
+			$scope.editI[index] = false;
+		}
+
+		$scope.addIngredientToRecipe= function(index) {
+			$scope.addI[index] = true;
+			var i = {
+				ingredient:undefined,
+				quantity:undefined,
+				unit:undefined
+			}
+			$scope.add.push(i);
+		}
+
+		$scope.addToR = function(index) {
+		for (var i =0 ; i < $scope.add.length ; i++) {
+			if ($scope.add[i] != undefined) {
+				$scope.recipe[index].ingredients.push($scope.add[i]);
+			}
+		}
+		recipe.replaceAll($scope.recipe);
+		$scope.addI[index] = false;
+		$scope.add = [];
+		}
 
 }]);
