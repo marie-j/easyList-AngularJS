@@ -6,16 +6,22 @@ var recipe = new browserdb("recipe");
 myApp.controller('listCtrl', ['$scope', '$routeParams', function($scope, $routeParams){
 
 	$scope.list = list.all();
+	$scope.checked = [];
 
 	$scope.deleteList = function() {
 		$scope.list = [];
+		$scope.checked = [];
 		list.replaceAll($scope.list);
 	}
 
-	$scope.addToList= function(title,number,article) {
+	$scope.addToList= function() {
 		var element;
 
-		if (title != undefined) {
+		var title = $scope.title;
+		var number = $scope.number;
+		var article = $scope.article;
+
+		if ($scope.title != undefined) {
 			element = {
 				name: title,
 				quantity: number
@@ -31,7 +37,26 @@ myApp.controller('listCtrl', ['$scope', '$routeParams', function($scope, $routeP
 			return;
 		}
 
+		$scope.title=undefined;
+		$scope.number=undefined;
+		$scope.article= undefined;
+
 		$scope.list.push(element);
+		$scope.checked.push(false);
+		list.replaceAll($scope.list);
+	}
+
+	$scope.checkElement = function(index) {
+		$scope.checked[index] = true;
+	}
+
+	$scope.uncheckElement = function(index) {
+		$scope.checked[index] = false;
+	}
+
+	$scope.deleteElement = function(index) {
+		$scope.list.splice(index,1);
+		$scope.checked.splice(index,1);
 		list.replaceAll($scope.list);
 	}
 
