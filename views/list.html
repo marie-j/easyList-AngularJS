@@ -10,7 +10,7 @@
     <input type="text" placeholder="Recette" id="title" ng-model="title">
     <input type="number" placeholder="Nombre de personnes" ng-model="number"></br>
     <input type="text" placeholder="Article" ng-model="article">
-    <button type="button" ng-click="addToList(title,number,article)" class="icon-plus"></button>
+    <button type="button" ng-click="addToList()" class="icon-plus"></button>
   </form>
 </div>
 
@@ -18,9 +18,10 @@
 
 <div class="list">
   <div class="element"  ng-repeat="e in list track by $index">
-    <label>{{e.name}}</label>
-    <label>{{e.quantity}}</label></br>
-    <button type="button" ng-click="checkElement()" class="icon-checkmark2"></button>
-    <button type="button" ng-click="deleteElement()" class="icon-cancel-circle"></button>
+    <span ng-class="{'striked: !checked[$index]'}">{{e.name}}</span>
+    <span>{{e.quantity}}</span></br>
+    <button type="button" ng-click="checkElement($index)" ng-if="!checked[$index]" class="icon-checkmark2"></button>
+    <button type="button" ng-click="uncheckElement($index)" ng-if="checked[$index]" class="icon-undo2"></button>
+    <button type="button" ng-click="deleteElement($index)" class="icon-cancel-circle"></button>
   </div>
 </div>
