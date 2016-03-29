@@ -92,8 +92,6 @@ myApp.controller('listCtrl', ['$scope', '$routeParams', function($scope, $routeP
 myApp.controller('recipeCtrl', ['$scope', '$routeParams', function($scope, $routeParams){
 		$scope.forms = [];
 		$scope.recipe = recipe.all();
-		$scope.showAll= true;
-		$scope.searched = [];
 		$scope.showIngredients = [];
 		$scope.editR = [];
 		$scope.editI = [];
@@ -148,22 +146,19 @@ myApp.controller('recipeCtrl', ['$scope', '$routeParams', function($scope, $rout
 			}
 		}
 
-		$scope.lookFor = function(search) {
-			if (!$scope.showAll){
-				$scope.searched = [];
+		$scope.lookFor = function(title) {
+			var txt = $scope.search;
+			if(txt == undefined || txt == "") {
+				return true;
 			}
-			var r = $scope.recipe;
-			for (var i = 0 ; i < r.length ; i ++) {
-				if (r[i].title.substring(0,search.length) == search) {
-					$scope.searched.push(r[i]);
-				}
-			}
-			$scope.search = undefined;
-			$scope.showAll = false;
-		}
 
-		$scope.goBack = function() {
-			$scope.showAll = true;
+			if (title.substring(0,txt.length) == txt) {
+				return true;
+			}
+			else {
+				return false;
+			}
+
 		}
 
 		$scope.showRecipe = function(index) {

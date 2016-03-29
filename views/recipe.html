@@ -6,34 +6,40 @@
 <div class="addRecipe">
   <form>
     <input type="text" placeholder="Titre" ng-model="title">
-    <input type="number" placeholder="Nombre de personnes" ng-model="number">
+    <input type="number" placeholder="Nombre de personnes" ng-model="number" id="person">
     <div class="addingredient" ng-repeat="f in forms track by $index">
       <form>
         <input type="text" ng-model="f.ingredient" placeholder="Ingrédient">
-        <input type="number" ng-model="f.quantity" placeholder="Quantité">
+        <input type="number" ng-model="f.quantity" placeholder="Quantité" id="person">
         <input type="text" ng-model="f.unit" placeholder="Unité">
       </form>
     </div>
     <button type="button" ng-click="addIngredient()" class="icon-plus"></button>
-    <button type="button" ng-click="addRecipe()">Ajouter la recette</button>
+    <button type="button" ng-click="addRecipe()">AJOUTER LA RECETTE</button>
   </form>
 </div>
 
-<span>Ma liste de recettes</span>
+<span id="list">MA LISTE DE RECETTES</span>
 
-<div>
+<div id="research">
   <input type="text" ng-model="search">
-  <button type="button" ng-click="lookFor(search)" class="icon-search"></button>
+  <span class="icon-search"></span>
 </div>
 
-<div class="list" ng-if="showAll">
-  <div class="recipe" ng-repeat="r in recipe track by $index">
-    <span>{{r.title}}</span>
-    <button type="button" ng-click="showRecipe($index)" ng-if="!showIngredients[$index]">Voir </button>
-    <button type="button" ng-click="editRecipe($index)" ng-if="!editR[$index]">Modifier</button>
-    <button type="button" ng-click="deleteRecipe($index)">Supprimer</button></br>
-    <button type="button" ng-click="addIngredientToRecipe($index)" ng-if="editR[$index]">Ajouter un ingrédient</button>
-    <button type="button" ng-click="hide($index)" ng-if="showIngredients[$index] || editR[$index]">Retour</button>
+<div class="list">
+  <div class="recipe" ng-repeat="r in recipe track by $index" ng-if="lookFor(r.title)">
+    <span >{{r.title}}</span></br>
+    <div class="button">
+    <button type="button" ng-click="showRecipe($index)" ng-if="!showIngredients[$index]">VOIR </button>
+    <button type="button" ng-click="editRecipe($index)" ng-if="!editR[$index]">MODIFIER</button>
+    <button type="button" ng-click="deleteRecipe($index)">SUPPRIMER</button></br>
+    </div>
+
+
+    <div id="options">
+    <button type="button" ng-click="addIngredientToRecipe($index)" ng-if="editR[$index]">AJOUTER UN INGREDIENT</button>
+    <button type="button" ng-click="hide($index)" ng-if="showIngredients[$index] || editR[$index]">RETOUR</button>
+    </div>
 
     <div class="addingredient" ng-repeat="a in add track by $index" ng-if="addI[$parent.$index]">
       <form>
@@ -42,7 +48,7 @@
         <input type="text" ng-model="a.unit" placeholder="Unité">
       </form>
     </div>
-    <button type="button" ng-click="addToR($index)" ng-if="addI[$index]">Valider</button>
+    <button type="button" ng-click="addToR($index)" ng-if="addI[$index]" class="addingredient">VALIDER</button>
 
     <div class="ingredient" ng-repeat="i in r.ingredients track by $index" ng-if="showIngredients[$parent.$index]">
     <span>{{i.ingredient}}  {{i.quantity}} {{i.unit}}</span>
@@ -50,8 +56,8 @@
 
     <div class="ingredient" ng-repeat="i in r.ingredients track by $index" ng-if="editR[$parent.$index] && !editI[$parent.$index][$index]">
     <span>{{i.ingredient}}  {{i.quantity}} {{i.unit}}</span>
-    <button type="button" ng-click="editIngredient($parent.$parent.$index,$index)">Modifier l'ingrédient</button>
-    <button type="button" ng-click="deleteIngredient($parent.$parent.$index,$index)">Supprimer l'ingrédient</button>
+    <button type="button" ng-click="editIngredient($parent.$parent.$index,$index)">MODIFIER L'INGREDIENT</button>
+    <button type="button" ng-click="deleteIngredient($parent.$parent.$index,$index)">SUPPRIMER L'INGREDIENT</button>
     </div>
 
     <div class="ingredient" ng-repeat="i in r.ingredients track by $index" ng-if="editI[$parent.$index][$index] && editR[$parent.$index]">
@@ -64,19 +70,6 @@
     </div>
 
   </div>
-
-
-
-
-</div>
-
-<div class="research" ng-if="!showAll">
-  <button type="button" ng-click="goBack()" class="icon-undo2"></button>
-  <div ng-repeat="r in searched track by $index">
-    <span>{{r.title}}</span>
-    <button type="button" ng-click="showRecipe($index)">Voir </button>
-    <button type="button" ng-click="editRecipe($index)">Modifier</button>
-    <button type="button" ng-click="deleteRecipe($index)">Supprimer</button>
   </div>
 
 </div>
