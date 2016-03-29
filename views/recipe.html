@@ -48,19 +48,19 @@
     <span>{{i.ingredient}}  {{i.quantity}} {{i.unit}}</span>
     </div>
 
-    <div class="ingredient" ng-repeat="i in r.ingredients track by $index" ng-if="editR[$parent.$index] && !editI[$index]">
+    <div class="ingredient" ng-repeat="i in r.ingredients track by $index" ng-if="editR[$parent.$index] && !editI[$parent.$index][$index]">
     <span>{{i.ingredient}}  {{i.quantity}} {{i.unit}}</span>
-    <button type="button" ng-click="editIngredient($index)">Modfier l'ingrédient</button>
-    <button type="button" ng-click="deleteIngredient($parent.$index,$index)">Supprimer l'ingrédient</button>
+    <button type="button" ng-click="editIngredient($parent.$parent.$index,$index)">Modifier l'ingrédient</button>
+    <button type="button" ng-click="deleteIngredient($parent.$parent.$index,$index)">Supprimer l'ingrédient</button>
     </div>
 
-    <div class="ingredient" ng-repeat="i in r.ingredients track by $index" ng-if="editI[$index]">
+    <div class="ingredient" ng-repeat="i in r.ingredients track by $index" ng-if="editI[$parent.$index][$index] && editR[$parent.$index]">
     <form>
       <input type="text" ng-model="i.ingredient" placeholder={{i.ingredient}}>
       <input type="number" ng-model="i.quantity" placeholder={{i.quantity}}>
       <input type="text" ng-model="i.unit" placeholder="{{i.unit}}">
     </form>
-    <button type="button" ng-click="validate($index)">Valider</button>
+    <button type="button" ng-click="validate($parent.$parent.$index,$index)">Valider</button>
     </div>
 
   </div>
@@ -74,9 +74,9 @@
   <button type="button" ng-click="goBack()" class="icon-undo2"></button>
   <div ng-repeat="r in searched track by $index">
     <span>{{r.title}}</span>
-    <button type="button" ng-click="showRecipe()">Voir </button>
-    <button type="button" ng-click="editRecipe()">Modifier</button>
-    <button type="button" ng-click="deletRecipe">Supprimer</button>
+    <button type="button" ng-click="showRecipe($index)">Voir </button>
+    <button type="button" ng-click="editRecipe($index)">Modifier</button>
+    <button type="button" ng-click="deleteRecipe($index)">Supprimer</button>
   </div>
 
 </div>

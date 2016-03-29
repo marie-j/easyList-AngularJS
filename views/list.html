@@ -18,8 +18,8 @@
 
 <div class="list">
   <div class="element"  ng-repeat="e in list track by $index">
-    <span ng-class="{'striked: !checked[$index]'}">{{e.name}}</span>
-    <span>{{e.quantity}}</span></br>
+    <span ng-class="{'striked' : !checked[$index]}">{{e.name}}</span>
+    <span>{{e.quantity}} {{e.unit}}</span></br>
     <button type="button" ng-click="checkElement($index)" ng-if="!checked[$index]" class="icon-checkmark2"></button>
     <button type="button" ng-click="uncheckElement($index)" ng-if="checked[$index]" class="icon-undo2"></button>
     <button type="button" ng-click="deleteElement($index)" class="icon-cancel-circle"></button>

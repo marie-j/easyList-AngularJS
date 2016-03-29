@@ -22,16 +22,45 @@ myApp.controller('listCtrl', ['$scope', '$routeParams', function($scope, $routeP
 		var article = $scope.article;
 
 		if ($scope.title != undefined) {
-			element = {
-				name: title,
-				quantity: number
+
+			var search = function(e) {
+				return e.title == title;
+			}
+
+			var found = recipe.all().find(search);
+			var coef;
+
+			if (number == undefined || number == found.number) {
+				coef = 1;
+			}
+			else {
+				coef = number/found.number;
+			}
+
+			if (found != undefined) {
+				for (var i = 0 ; i < found.ingredients.length ; i++) {
+					var q = found.ingredients[i].quantity * coef;
+				element = {
+					name: found.ingredients[i].ingredient,
+					quantity: q,
+					unit: found.ingredients[i].unit
+				}
+				$scope.list.push(element);
+				$scope.checked.push(false);
+			}
+			}
+			else {
+				alert("Cette recette n'existe pas !");
 			}
 		}
 		else if (article != undefined) {
 			element = {
 				name: article,
-				quantity: ""
+				quantity: "",
+				unit:""
 			}
+			$scope.list.push(element);
+			$scope.checked.push(false);
 		}
 		else {
 			return;
@@ -41,8 +70,6 @@ myApp.controller('listCtrl', ['$scope', '$routeParams', function($scope, $routeP
 		$scope.number=undefined;
 		$scope.article= undefined;
 
-		$scope.list.push(element);
-		$scope.checked.push(false);
 		list.replaceAll($scope.list);
 	}
 
@@ -161,8 +188,9 @@ myApp.controller('recipeCtrl', ['$scope', '$routeParams', function($scope, $rout
 			recipe.replaceAll($scope.recipe);
 		}
 
-		$scope.editIngredient = function(index) {
-			$scope.editI[index] = true;
+		$scope.editIngredient = function(indice,index) {
+			$scope.editI[indice] =[];
+			$scope.editI[indice][index] = true;
 		}
 
 		$scope.deleteIngredient = function(indice,index) {
@@ -170,9 +198,10 @@ myApp.controller('recipeCtrl', ['$scope', '$routeParams', function($scope, $rout
 			recipe.replaceAll($scope.recipe);
 		}
 
-		$scope.validate = function(index) {
+		$scope.validate = function(indice,index) {
 			recipe.replaceAll($scope.recipe);
-			$scope.editI[index] = false;
+			$scope.editI[indice] =[];
+			$scope.editI[indice][index] = false;
 		}
 
 		$scope.addIngredientToRecipe= function(index) {
