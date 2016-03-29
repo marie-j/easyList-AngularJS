@@ -1,0 +1,36 @@
+<header>
+  <span><a href="#/list">Ma Liste</a></span>
+  <span>Recettes</span>
+</header>
+
+<div class="addRecipe">
+  <form>
+    <input type="text" placeholder="Titre" ng-model="title">
+    <input type="number" placeholder="Nombre de personnes" ng-model="number">
+    <div class="addingredient" ng-repeat="f in forms track by $index">
+      <form>
+        <input type="text" ng-model="f.ingredient" placeholder="Ingrédient">
+        <input type="number" ng-model="f.quantity" placeholder="Quantité">
+        <input type="text" ng-model="f.unit" placeholder="Unité">
+      </form>
+    </div>
+    <button type="button" ng-click="addIngredient()" class="icon-plus"></button>
+    <button type="button" ng-click="addRecipe()">Ajouter la recette</button>
+  </form>
+</div>
+
+<span>Ma liste de recettes</span>
+
+<div class="search">
+  <input type="text" ng-model="search">
+  <button type="button" ng-click="search()" class="icon-search"></button>
+</div>
+
+<div class="list">
+  <div class="recipe" ng-repeat="r in recipe track by $index">
+    <span>{{r.title}}</span>
+    <button type="button" ng-click="showRecipe()">Voir </button>
+    <button type="button" ng-click="editRecipe()">Modifier</button>
+    <button type="button" ng-click="deletRecipe">Supprimer</button>
+  </div>
+</div>

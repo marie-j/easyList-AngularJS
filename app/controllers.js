@@ -63,5 +63,56 @@ myApp.controller('listCtrl', ['$scope', '$routeParams', function($scope, $routeP
 }])
 
 myApp.controller('recipeCtrl', ['$scope', '$routeParams', function($scope, $routeParams){
+		$scope.forms = [];
+		$scope.recipe = recipe.all();
+
+		$scope.addIngredient = function() {
+			var f = {
+				title: undefined,
+				quantity: undefined,
+				unit: undefined
+			}
+			$scope.forms.push(f);
+		}
+
+		$scope.addRecipe = function() {
+			var ingredients = [];
+			var forms = $scope.forms
+			for (var i = 0 ; i <forms.length ; i++) {
+				if (forms[i].ingredient != undefined) {
+					ingredients.push(forms[i]);
+				}
+			}
+
+			var title = $scope.title;
+
+			if (title == undefined) {
+				alert("Vous n'avez pas donné de nom à votre recette");
+			}
+
+			else {
+				var search = function(e) {
+					return e.title == title;
+				}
+
+				var trouve = $scope.recipe.find(search);
+				if (trouve != undefined) {
+					alert("Une recette porte déjà ce nom !")
+				}
+				else {
+
+					var r = {
+						title: title,
+						number: $scope.number,
+						ingredients: ingredients
+					}
+					$scope.recipe.push(r);
+					recipe.replaceAll($scope.recipe);
+					$scope.title= undefined;
+					$scope.forms = [];
+				}
+			}
+		}
+
 
 }]);
